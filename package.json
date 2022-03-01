@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/JacobDaley25/mern_app_back#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express-session": "^1.17.2",
     "mongoose": "^6.2.4",
     "nodemon": "^2.0.15"
   }
