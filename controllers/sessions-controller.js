@@ -1,31 +1,25 @@
-const bcrypt= require('bcrypt')
-const express = require('express')
+const express = require ('express')
 const sessions = express.Router()
-const User = require('../models/users.js')
+const usersDB ={
+  users: require('../models/users.js'),
+  setUsers: function (data) {this.users = data}
+}
 
-sessions.post('/', (req, res) => {
+const bcrypt = require('bcrypt')
 
-  User.findOne({username:req.body.username}, (error, foundUser) => {
+const handleLogin = async (req,res)=>{
+  const {username , password} = req.body
+  if (!username || !password) return res.stats(400).json({'message':'Username and password are required'})
+  const foundUser = usersDB.username.find(username => username === user)
+  if (!foundUser) return res.sendStatus(401)
+  const match = await bcrypt.compare(password, foundUser.password)
+  if (match){
+    res.json({'success':`User ${username} is loggined in!`})
+  } else {
+    res.sendStatus(401)
+  }
+}
 
-    if (error){
-      console.log('error');
-    }if (!foundUser) {
-      console.log('no user found');
-    }else{
-      //user is found
-      //check if passwords match
-      if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-        //add user to session
-      req.session.currentUser = foundUser
-      // redirect to home page
-      res.redirect('/')
-    } else{
-      //passwords do not match
-      console.log('password does not match');
-    }
-    }
-  })
-// })
-})
+sessions.post('/', handleLogin)
 
 module.exports = sessions

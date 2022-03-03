@@ -24,7 +24,7 @@ app.use(cors(corsOptions));
 app.use(express.json())
 app.use('/plants', plantController)
 app.use('/users', userController)
-app.use('/auth', sessionsController)
+app.use('/auth', sessionController)
 
 app.listen(PORT, () => {
   console.log('listening...');
