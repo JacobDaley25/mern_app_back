@@ -12,13 +12,19 @@ const db = mongoose.connection;
 const PORT = process.env.PORT || 3000
 const mongoURI = String(process.env.MONGODBURI)
 const userController=require('./controllers/user_controller.js')
-
+const corsOptions ={
+    origin:'https://plantwateringapi.herokuapp.com/',
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+const sessionController = require('./controllers/sessions-controller.js')
+app.use(cors(corsOptions));
 
 
 app.use(express.json())
-app.use(cors())
 app.use('/plants', plantController)
 app.use('/users', userController)
+app.use('/auth', sessionsController)
 
 app.listen(PORT, () => {
   console.log('listening...');
