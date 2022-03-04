@@ -1,5 +1,8 @@
 const whitelist = [
     'https://plant20water.herokuapp.com',
+    'plant20water.herokuapp.com',
+    'localhost:3000',
+    'localhost:3001',
     'http://localhost:3001',
     'http://localhost:3000'
 ];
