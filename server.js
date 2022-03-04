@@ -14,7 +14,7 @@ const mongoURI = String(process.env.MONGODBURI)
 const userController=require('./controllers/user_controller.js')
 const corsOptions = require('./config/corsOptions.js')
 const sessionController = require('./controllers/sessions-controller.js')
-app.use(cors());
+app.use(cors(corsOptions));
 
 
 app.use(express.json())
