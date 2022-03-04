@@ -13,9 +13,13 @@ const PORT = process.env.PORT || 3000
 const mongoURI = String(process.env.MONGODBURI)
 const userController=require('./controllers/user_controller.js')
 const corsOptions ={
-    origin:'https://plantwateringapi.herokuapp.com/',
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
+  'supportsCredentials' => true,
+'allowedOrigins' => ['*'],
+'allowedOriginsPatterns' => [],
+'allowedHeaders' => ['*'],
+'allowedMethods' => ['*'],
+'exposedHeaders' => [],
+'maxAge' => 0,
 }
 const sessionController = require('./controllers/sessions-controller.js')
 app.use(cors(corsOptions));
