@@ -1,5 +1,4 @@
-const express = require ('express')
-const sessions = express.Router()
+
 const usersDB ={
   users: require('../models/users.js'),
   setUsers: function (data) {this.users = data}
@@ -20,6 +19,6 @@ const handleLogin = async (req,res)=>{
   }
 }
 
-sessions.post('/', handleLogin)
 
-module.exports = sessions
+
+module.exports = {handleLogin}
