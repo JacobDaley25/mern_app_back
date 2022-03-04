@@ -1,24 +1,40 @@
-
-const usersDB ={
-  users: require('../models/users.js'),
-  setUsers: function (data) {this.users = data}
-}
-
 const bcrypt = require('bcrypt')
-
-const handleLogin = async (req,res)=>{
-  const {username , password} = req.body
-  if (!username || !password) return res.stats(400).json({'message':'Username and password are required'})
-  const foundUser = usersDB.username.find(username => username === user)
-  if (!foundUser) return res.sendStatus(401)
-  const match = await bcrypt.compare(password, foundUser.password)
-  if (match){
-    res.json({'success':`User ${username} is loggined in!`})
-  } else {
-    res.sendStatus(401)
-  }
-}
+const express = require('express')
+const sessions = express.Router()
+const User = require('../models/users.js')
 
 
+//on seesions form submit (log in)
+sessions.post('/', (req, res) => {
 
-module.exports = {handleLogin}
+  User.findOne({username:req.body.username}, (error, foundUser) => {
+
+    if (error){
+      console.log('error');
+      res.json('oops we had a problem')
+    }if (!foundUser) {
+      res.json('<a href="/users/new">Sorry, no user found </a>')
+    }else{
+      //user is found
+      //check if passwords match
+      if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+        currentUser:req.body.username,
+        //add user to session
+      req.session.currentUser = foundUser
+      // redirect to home page
+    } else{
+      //passwords do not match
+      res.json('<a href="/">password does not match </a>')
+    }
+    }
+  })
+// })
+})
+// sessions.delete('/', (req, res)=>{
+//   req.session.destroy(() =>{
+//     res.redirect('/')
+//   })
+// })
+
+
+module.exports = sessions
